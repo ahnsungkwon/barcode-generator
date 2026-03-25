@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Writer in Pure PostScript - Online Generator Clone</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Barcode Writer in Pure PostScript</h1>
+            <nav>
+                <a href="#">Home</a> | <a href="#">Symbologies</a> | <a href="#">Documentation</a> | <a href="#">Download</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="generator-box">
+                <div class="field">
+                    <label for="symbology">Barcode Type:</label>
+                    <select id="symbology"></select>
+                </div>
+
+                <div class="field">
+                    <label for="contents">Contents:</label>
+                    <textarea id="contents" placeholder="Enter data to encode">0123456789</textarea>
+                </div>
+
+                <div class="field">
+                    <label for="options">Options:</label>
+                    <input type="text" id="options" value="includetext guardwhitespace">
+                </div>
+
+                <div class="actions">
+                    <button id="makeBarcode">Make Barcode</button>
+                </div>
+            </section>
+
+            <section class="output-box">
+                <div id="errorMessage" class="error"></div>
+                <div id="canvas-container">
+                    <canvas id="barcodeCanvas"></canvas>
+                </div>
+                <div id="download-links" style="display:none;">
+                    <button onclick="downloadImage()">Download PNG</button>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Clone of Terry Burton's BWIPP Generator. Powered by <a href="https://github.com/metafloor/bwip-js">bwip-js</a>.</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bwip-js/dist/bwip-js-min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
