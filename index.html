@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barcode Writer in Pure PostScript - Online Generator Clone</title>
+    <title>Barcode Writer in Pure PostScript - Generator Clone</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div id="wrapper">
         <header>
             <h1>Barcode Writer in Pure PostScript</h1>
             <nav>
@@ -15,41 +15,62 @@
             </nav>
         </header>
 
-        <main>
-            <section class="generator-box">
-                <div class="field">
+        <section class="main-content">
+            <div class="params">
+                <div class="row">
                     <label for="symbology">Barcode Type:</label>
                     <select id="symbology"></select>
                 </div>
-
-                <div class="field">
+                <div class="row">
                     <label for="contents">Contents:</label>
-                    <textarea id="contents" placeholder="Enter data to encode">0123456789</textarea>
+                    <textarea id="contents">0123456789</textarea>
+                </div>
+                <div class="row">
+                    <label for="options">Options:</label>
+                    <input type="text" id="options" value="includetext guardwhitespace" placeholder="e.g. includetext">
                 </div>
 
-                <div class="field">
-                    <label for="options">Options:</label>
-                    <input type="text" id="options" value="includetext guardwhitespace">
+                <div class="advanced-grid">
+                    <div class="row">
+                        <label for="scaleX">Scale X, Y:</label>
+                        <div class="scale-pair">
+                            <input type="number" id="scaleX" value="2" step="1" min="1">
+                            <input type="number" id="scaleY" value="2" step="1" min="1">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="rotate">Rotate:</label>
+                        <select id="rotate">
+                            <option value="N">Normal</option>
+                            <option value="R">90 Right</option>
+                            <option value="L">90 Left</option>
+                            <option value="I">180 Inverted</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="actions">
-                    <button id="makeBarcode">Make Barcode</button>
+                    <button id="btn-generate" type="button">Make Barcode</button>
                 </div>
-            </section>
+            </div>
 
-            <section class="output-box">
-                <div id="errorMessage" class="error"></div>
-                <div id="canvas-container">
-                    <canvas id="barcodeCanvas"></canvas>
+            <div class="output-area">
+                <div id="error-msg"></div>
+                <div id="render-container">
+                    <div id="canvas-wrapper">
+                        <canvas id="output-canvas"></canvas>
+                    </div>
                 </div>
-                <div id="download-links" style="display:none;">
-                    <button onclick="downloadImage()">Download PNG</button>
+                <div id="download-zone" style="display:none;">
+                    <button type="button" onclick="downloadPNG()">Download PNG</button>
+                    <button type="button" onclick="downloadSVG()">Download SVG (Vector)</button>
+                    <p class="tip">* EPS는 벡터 형식이므로 SVG를 다운로드하여 변환해 사용하세요.</p>
                 </div>
-            </section>
-        </main>
+            </div>
+        </section>
 
         <footer>
-            <p>Clone of Terry Burton's BWIPP Generator. Powered by <a href="https://github.com/metafloor/bwip-js">bwip-js</a>.</p>
+            <p>&copy; Clone of BWIPP Online Generator. Powered by <a href="https://github.com/metafloor/bwip-js" target="_blank" rel="noreferrer">bwip-js</a></p>
         </footer>
     </div>
 
