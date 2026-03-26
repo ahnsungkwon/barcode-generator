@@ -3,74 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barcode Writer in Pure PostScript - Generator Clone</title>
+    <title>Barcode Generator Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="wrapper">
-        <header>
-            <h1>Barcode Writer in Pure PostScript</h1>
-            <nav>
-                <a href="#">Home</a> | <a href="#">Symbologies</a> | <a href="#">Documentation</a> | <a href="#">Download</a>
+    <div class="page-shell">
+        <header class="site-header">
+            <a class="brand-mark" href="#top">Barcode Generator</a>
+            <nav class="site-nav" aria-label="Primary">
+                <a href="#workspace">Workspace</a>
+                <a href="#guide">Guide</a>
+                <a href="https://github.com/ahnsungkwon/barcode-generator" target="_blank" rel="noreferrer">GitHub</a>
             </nav>
         </header>
 
-        <section class="main-content">
-            <div class="params">
-                <div class="row">
-                    <label for="symbology">Barcode Type:</label>
-                    <select id="symbology"></select>
-                </div>
-                <div class="row">
-                    <label for="contents">Contents:</label>
-                    <textarea id="contents">0123456789</textarea>
-                </div>
-                <div class="row">
-                    <label for="options">Options:</label>
-                    <input type="text" id="options" value="includetext guardwhitespace" placeholder="e.g. includetext">
+        <main id="top">
+            <section class="hero">
+                <div class="hero-copy">
+                    <p class="eyebrow">Precision label lab</p>
+                    <h1>Generate crisp barcodes in a quieter, sharper workspace.</h1>
+                    <p class="hero-lede">
+                        Tune symbologies, scale, rotation, and export format in one screen. Built on
+                        <a href="https://github.com/metafloor/bwip-js" target="_blank" rel="noreferrer">bwip-js</a>,
+                        redesigned for faster iteration and cleaner output review.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#workspace">Open workspace</a>
+                        <button class="button button-secondary" id="hero-generate" type="button">Render current draft</button>
+                    </div>
+                    <ul class="hero-list">
+                        <li>Common 1D and 2D formats in one place</li>
+                        <li>Instant PNG and SVG export</li>
+                        <li>Readable controls for real production tweaks</li>
+                    </ul>
                 </div>
 
-                <div class="advanced-grid">
-                    <div class="row">
-                        <label for="scaleX">Scale X, Y:</label>
-                        <div class="scale-pair">
+                <div class="hero-art" aria-hidden="true">
+                    <div class="hero-art-caption">
+                        <span>01</span>
+                        <p>Signal-ready output with a stronger first impression.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="workspace" id="workspace">
+                <div class="panel panel-controls">
+                    <div class="panel-heading">
+                        <p class="panel-kicker">Build</p>
+                        <h2>Configure the symbol</h2>
+                        <p>Start with a preset or dial the exact barcode parameters you need.</p>
+                    </div>
+
+                    <div class="preset-strip" aria-label="Barcode presets">
+                        <button class="preset-button" type="button" data-bcid="code128" data-text="0123456789" data-options="includetext guardwhitespace">Code 128</button>
+                        <button class="preset-button" type="button" data-bcid="ean13" data-text="5901234123457" data-options="includetext guardwhitespace">EAN-13</button>
+                        <button class="preset-button" type="button" data-bcid="qrcode" data-text="https://example.com/inventory/0123456789" data-options="">QR Code</button>
+                    </div>
+
+                    <div class="control-grid">
+                        <label class="field">
+                            <span>Barcode type</span>
+                            <select id="symbology"></select>
+                        </label>
+
+                        <label class="field field-wide">
+                            <span>Contents</span>
+                            <textarea id="contents">0123456789</textarea>
+                        </label>
+
+                        <label class="field field-wide">
+                            <span>Options</span>
+                            <input type="text" id="options" value="includetext guardwhitespace" placeholder="includetext guardwhitespace">
+                        </label>
+
+                        <label class="field">
+                            <span>Scale X</span>
                             <input type="number" id="scaleX" value="2" step="1" min="1">
+                        </label>
+
+                        <label class="field">
+                            <span>Scale Y</span>
                             <input type="number" id="scaleY" value="2" step="1" min="1">
+                        </label>
+
+                        <label class="field">
+                            <span>Rotation</span>
+                            <select id="rotate">
+                                <option value="N">Normal</option>
+                                <option value="R">90 Right</option>
+                                <option value="L">90 Left</option>
+                                <option value="I">180 Inverted</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="panel-actions">
+                        <button class="button button-primary" id="btn-generate" type="button">Generate barcode</button>
+                    </div>
+                </div>
+
+                <div class="panel panel-preview">
+                    <div class="panel-heading panel-heading-inline">
+                        <div>
+                            <p class="panel-kicker">Preview</p>
+                            <h2>Scan and export</h2>
+                        </div>
+                        <p class="status-copy" id="status-copy">Ready to render.</p>
+                    </div>
+
+                    <div class="preview-meta" aria-label="Current settings">
+                        <div>
+                            <span class="meta-label">Type</span>
+                            <strong id="meta-type">Code 128</strong>
+                        </div>
+                        <div>
+                            <span class="meta-label">Scale</span>
+                            <strong id="meta-scale">2 x 2</strong>
+                        </div>
+                        <div>
+                            <span class="meta-label">Rotation</span>
+                            <strong id="meta-rotate">Normal</strong>
                         </div>
                     </div>
-                    <div class="row">
-                        <label for="rotate">Rotate:</label>
-                        <select id="rotate">
-                            <option value="N">Normal</option>
-                            <option value="R">90 Right</option>
-                            <option value="L">90 Left</option>
-                            <option value="I">180 Inverted</option>
-                        </select>
+
+                    <div id="error-msg" role="alert" aria-live="polite"></div>
+
+                    <div id="render-container">
+                        <div id="canvas-wrapper">
+                            <canvas id="output-canvas"></canvas>
+                        </div>
+                    </div>
+
+                    <div id="download-zone" hidden>
+                        <div class="download-actions">
+                            <button class="button button-primary" type="button" onclick="downloadPNG()">Download PNG</button>
+                            <button class="button button-secondary" type="button" onclick="downloadSVG()">Download SVG</button>
+                        </div>
+                        <p class="tip">Use SVG when you need vector output for print, packaging, or downstream editing.</p>
                     </div>
                 </div>
+            </section>
 
-                <div class="actions">
-                    <button id="btn-generate" type="button">Make Barcode</button>
+            <section class="guide" id="guide">
+                <div class="guide-item">
+                    <p class="panel-kicker">Format discipline</p>
+                    <h3>Choose the symbol for the job.</h3>
+                    <p>Stay with Code 128 and EAN for retail-style labels, move to QR or Data Matrix when density matters.</p>
                 </div>
-            </div>
+                <div class="guide-item">
+                    <p class="panel-kicker">Option syntax</p>
+                    <h3>Keep flags short and explicit.</h3>
+                    <p>Enter options as space-separated flags such as <code>includetext</code> or key-value pairs like <code>height=18</code>.</p>
+                </div>
+                <div class="guide-item">
+                    <p class="panel-kicker">Export path</p>
+                    <h3>Review in raster, deliver in vector.</h3>
+                    <p>PNG is fast for review. SVG is the safer handoff when a printer, designer, or downstream system needs clean geometry.</p>
+                </div>
+            </section>
+        </main>
 
-            <div class="output-area">
-                <div id="error-msg"></div>
-                <div id="render-container">
-                    <div id="canvas-wrapper">
-                        <canvas id="output-canvas"></canvas>
-                    </div>
-                </div>
-                <div id="download-zone" style="display:none;">
-                    <button type="button" onclick="downloadPNG()">Download PNG</button>
-                    <button type="button" onclick="downloadSVG()">Download SVG (Vector)</button>
-                    <p class="tip">* EPS는 벡터 형식이므로 SVG를 다운로드하여 변환해 사용하세요.</p>
-                </div>
-            </div>
-        </section>
-
-        <footer>
-            <p>&copy; Clone of BWIPP Online Generator. Powered by <a href="https://github.com/metafloor/bwip-js" target="_blank" rel="noreferrer">bwip-js</a></p>
+        <footer class="site-footer">
+            <p>Pure browser barcode rendering with <a href="https://github.com/metafloor/bwip-js" target="_blank" rel="noreferrer">bwip-js</a>.</p>
         </footer>
     </div>
 

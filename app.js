@@ -28,23 +28,59 @@ const symbologies = [
     }
 ];
 
+const rotateLabels = {
+    N: "Normal",
+    R: "90 Right",
+    L: "90 Left",
+    I: "180 Inverted"
+};
+
 document.addEventListener("DOMContentLoaded", () => {
+    populateSymbologies();
+    attachEventHandlers();
+    updatePreviewMeta();
+    renderBarcode();
+});
+
+function populateSymbologies() {
     const select = document.getElementById("symbology");
 
     symbologies.forEach((group) => {
         const optgroup = document.createElement("optgroup");
         optgroup.label = group.group;
+
         group.items.forEach((item) => {
             const option = document.createElement("option");
             option.value = item.id;
             option.textContent = item.name;
             optgroup.appendChild(option);
         });
+
         select.appendChild(optgroup);
     });
+}
 
+function attachEventHandlers() {
     document.getElementById("btn-generate").addEventListener("click", renderBarcode);
-});
+    document.getElementById("hero-generate").addEventListener("click", renderBarcode);
+
+    ["symbology", "scaleX", "scaleY", "rotate"].forEach((id) => {
+        document.getElementById(id).addEventListener("change", updatePreviewMeta);
+    });
+
+    document.getElementById("contents").addEventListener("input", updatePreviewMeta);
+    document.getElementById("options").addEventListener("input", updatePreviewMeta);
+
+    document.querySelectorAll(".preset-button").forEach((button) => {
+        button.addEventListener("click", () => {
+            document.getElementById("symbology").value = button.dataset.bcid;
+            document.getElementById("contents").value = button.dataset.text;
+            document.getElementById("options").value = button.dataset.options;
+            updatePreviewMeta();
+            renderBarcode();
+        });
+    });
+}
 
 function buildOptions() {
     const optionsStr = document.getElementById("options").value.trim();
@@ -60,6 +96,7 @@ function buildOptions() {
         if (!pair) {
             return;
         }
+
         const [key, value] = pair.split("=");
         opts[key] = value === undefined ? true : value;
     });
@@ -67,21 +104,43 @@ function buildOptions() {
     return opts;
 }
 
+function updatePreviewMeta() {
+    const symbology = document.getElementById("symbology");
+    const scaleX = document.getElementById("scaleX").value || "2";
+    const scaleY = document.getElementById("scaleY").value || "2";
+    const rotate = document.getElementById("rotate").value;
+    const contents = document.getElementById("contents").value.trim();
+
+    document.getElementById("meta-type").textContent = symbology.options[symbology.selectedIndex]?.textContent || "Code 128";
+    document.getElementById("meta-scale").textContent = `${scaleX} x ${scaleY}`;
+    document.getElementById("meta-rotate").textContent = rotateLabels[rotate] || "Normal";
+
+    const statusCopy = document.getElementById("status-copy");
+    statusCopy.textContent = contents
+        ? `Ready to render ${contents.length} characters.`
+        : "Add data to render a barcode.";
+}
+
 function renderBarcode() {
     const canvas = document.getElementById("output-canvas");
     const errorMsg = document.getElementById("error-msg");
     const downloadZone = document.getElementById("download-zone");
+    const statusCopy = document.getElementById("status-copy");
     const context = canvas.getContext("2d");
     const opts = buildOptions();
+
+    updatePreviewMeta();
 
     try {
         bwipjs.toCanvas(canvas, opts);
         errorMsg.textContent = "";
-        downloadZone.style.display = "block";
+        downloadZone.hidden = false;
+        statusCopy.textContent = `Rendered ${opts.bcid} successfully.`;
     } catch (error) {
         errorMsg.textContent = error.message;
         context.clearRect(0, 0, canvas.width, canvas.height);
-        downloadZone.style.display = "none";
+        downloadZone.hidden = true;
+        statusCopy.textContent = "Adjust the input and try again.";
         console.error(error);
     }
 }
@@ -105,6 +164,6 @@ function downloadSVG() {
         link.click();
         URL.revokeObjectURL(url);
     } catch (error) {
-        alert(`SVG 생성 중 오류: ${error.message}`);
+        alert(`SVG generation failed: ${error.message}`);
     }
 }
