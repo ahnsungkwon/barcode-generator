@@ -64,6 +64,12 @@ select {
     padding: 14px 0 26px;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
 .brand-mark,
 .site-nav a,
 .eyebrow,
@@ -91,6 +97,40 @@ code {
 .site-nav a {
     text-decoration: none;
     color: var(--muted);
+}
+
+.language-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(248, 244, 237, 0.52);
+}
+
+.lang-button {
+    min-width: 44px;
+    padding: 7px 10px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font-family: "IBM Plex Mono", Consolas, monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    cursor: pointer;
+    transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.lang-button:hover {
+    background: rgba(16, 16, 16, 0.06);
+    color: var(--ink);
+}
+
+.lang-button.is-active {
+    background: var(--ink);
+    color: #f8f4ed;
 }
 
 .hero {
@@ -500,6 +540,11 @@ code {
         max-width: none;
         text-align: left;
     }
+
+    .header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
 }
 
 @media (max-width: 720px) {
@@ -512,6 +557,12 @@ code {
         flex-direction: column;
         align-items: flex-start;
         padding-bottom: 18px;
+    }
+
+    .header-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
     }
 
     .hero-copy,
@@ -528,7 +579,8 @@ code {
     .site-nav,
     .hero-actions,
     .download-actions,
-    .preset-strip {
+    .preset-strip,
+    .language-switch {
         width: 100%;
     }
 

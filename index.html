@@ -13,38 +13,44 @@
     <div class="page-shell">
         <header class="site-header">
             <a class="brand-mark" href="#top">Barcode Generator</a>
-            <nav class="site-nav" aria-label="Primary">
-                <a href="#workspace">Workspace</a>
-                <a href="#guide">Guide</a>
-                <a href="https://github.com/ahnsungkwon/barcode-generator" target="_blank" rel="noreferrer">GitHub</a>
-            </nav>
+            <div class="header-actions">
+                <nav class="site-nav" aria-label="Primary">
+                    <a href="#workspace" data-i18n="nav.workspace">Workspace</a>
+                    <a href="#guide" data-i18n="nav.guide">Guide</a>
+                    <a href="https://github.com/ahnsungkwon/barcode-generator" target="_blank" rel="noreferrer">GitHub</a>
+                </nav>
+                <div class="language-switch" role="group" aria-label="Language switch" data-i18n-aria="languageSwitchLabel">
+                    <button class="lang-button is-active" type="button" data-lang="en">EN</button>
+                    <button class="lang-button" type="button" data-lang="ko">KR</button>
+                </div>
+            </div>
         </header>
 
         <main id="top">
             <section class="hero">
                 <div class="hero-copy">
-                    <p class="eyebrow">Precision label lab</p>
-                    <h1>Generate crisp barcodes in a quieter, sharper workspace.</h1>
-                    <p class="hero-lede">
+                    <p class="eyebrow" data-i18n="hero.eyebrow">Precision label lab</p>
+                    <h1 data-i18n="hero.title">Generate crisp barcodes in a quieter, sharper workspace.</h1>
+                    <p class="hero-lede" data-i18n-html="hero.lede">
                         Tune symbologies, scale, rotation, and export format in one screen. Built on
                         <a href="https://github.com/metafloor/bwip-js" target="_blank" rel="noreferrer">bwip-js</a>,
                         redesigned for faster iteration and cleaner output review.
                     </p>
                     <div class="hero-actions">
-                        <a class="button button-primary" href="#workspace">Open workspace</a>
-                        <button class="button button-secondary" id="hero-generate" type="button">Render current draft</button>
+                        <a class="button button-primary" href="#workspace" data-i18n="hero.primaryCta">Open workspace</a>
+                        <button class="button button-secondary" id="hero-generate" type="button" data-i18n="hero.secondaryCta">Render current draft</button>
                     </div>
                     <ul class="hero-list">
-                        <li>Common 1D and 2D formats in one place</li>
-                        <li>Instant PNG and SVG export</li>
-                        <li>Readable controls for real production tweaks</li>
+                        <li data-i18n="hero.points.one">Common 1D and 2D formats in one place</li>
+                        <li data-i18n="hero.points.two">Instant PNG and SVG export</li>
+                        <li data-i18n="hero.points.three">Readable controls for real production tweaks</li>
                     </ul>
                 </div>
 
                 <div class="hero-art" aria-hidden="true">
                     <div class="hero-art-caption">
                         <span>01</span>
-                        <p>Signal-ready output with a stronger first impression.</p>
+                        <p data-i18n="hero.caption">Signal-ready output with a stronger first impression.</p>
                     </div>
                 </div>
             </section>
@@ -52,9 +58,9 @@
             <section class="workspace" id="workspace">
                 <div class="panel panel-controls">
                     <div class="panel-heading">
-                        <p class="panel-kicker">Build</p>
-                        <h2>Configure the symbol</h2>
-                        <p>Start with a preset or dial the exact barcode parameters you need.</p>
+                        <p class="panel-kicker" data-i18n="controls.kicker">Build</p>
+                        <h2 data-i18n="controls.title">Configure the symbol</h2>
+                        <p data-i18n="controls.description">Start with a preset or dial the exact barcode parameters you need.</p>
                     </div>
 
                     <div class="preset-strip" aria-label="Barcode presets">
@@ -65,66 +71,66 @@
 
                     <div class="control-grid">
                         <label class="field">
-                            <span>Barcode type</span>
+                            <span data-i18n="fields.barcodeType">Barcode type</span>
                             <select id="symbology"></select>
                         </label>
 
                         <label class="field field-wide">
-                            <span>Contents</span>
+                            <span data-i18n="fields.contents">Contents</span>
                             <textarea id="contents">0123456789</textarea>
                         </label>
 
                         <label class="field field-wide">
-                            <span>Options</span>
-                            <input type="text" id="options" value="includetext guardwhitespace" placeholder="includetext guardwhitespace">
+                            <span data-i18n="fields.options">Options</span>
+                            <input type="text" id="options" value="includetext guardwhitespace" placeholder="includetext guardwhitespace" data-i18n-placeholder="fields.optionsPlaceholder">
                         </label>
 
                         <label class="field">
-                            <span>Scale X</span>
+                            <span data-i18n="fields.scaleX">Scale X</span>
                             <input type="number" id="scaleX" value="2" step="1" min="1">
                         </label>
 
                         <label class="field">
-                            <span>Scale Y</span>
+                            <span data-i18n="fields.scaleY">Scale Y</span>
                             <input type="number" id="scaleY" value="2" step="1" min="1">
                         </label>
 
                         <label class="field">
-                            <span>Rotation</span>
+                            <span data-i18n="fields.rotation">Rotation</span>
                             <select id="rotate">
-                                <option value="N">Normal</option>
-                                <option value="R">90 Right</option>
-                                <option value="L">90 Left</option>
-                                <option value="I">180 Inverted</option>
+                                <option value="N" data-rotate-option="N">Normal</option>
+                                <option value="R" data-rotate-option="R">90 Right</option>
+                                <option value="L" data-rotate-option="L">90 Left</option>
+                                <option value="I" data-rotate-option="I">180 Inverted</option>
                             </select>
                         </label>
                     </div>
 
                     <div class="panel-actions">
-                        <button class="button button-primary" id="btn-generate" type="button">Generate barcode</button>
+                        <button class="button button-primary" id="btn-generate" type="button" data-i18n="controls.generate">Generate barcode</button>
                     </div>
                 </div>
 
                 <div class="panel panel-preview">
                     <div class="panel-heading panel-heading-inline">
                         <div>
-                            <p class="panel-kicker">Preview</p>
-                            <h2>Scan and export</h2>
+                            <p class="panel-kicker" data-i18n="preview.kicker">Preview</p>
+                            <h2 data-i18n="preview.title">Scan and export</h2>
                         </div>
                         <p class="status-copy" id="status-copy">Ready to render.</p>
                     </div>
 
                     <div class="preview-meta" aria-label="Current settings">
                         <div>
-                            <span class="meta-label">Type</span>
+                            <span class="meta-label" data-i18n="preview.meta.type">Type</span>
                             <strong id="meta-type">Code 128</strong>
                         </div>
                         <div>
-                            <span class="meta-label">Scale</span>
+                            <span class="meta-label" data-i18n="preview.meta.scale">Scale</span>
                             <strong id="meta-scale">2 x 2</strong>
                         </div>
                         <div>
-                            <span class="meta-label">Rotation</span>
+                            <span class="meta-label" data-i18n="preview.meta.rotation">Rotation</span>
                             <strong id="meta-rotate">Normal</strong>
                         </div>
                     </div>
@@ -139,35 +145,35 @@
 
                     <div id="download-zone" hidden>
                         <div class="download-actions">
-                            <button class="button button-primary" type="button" onclick="downloadPNG()">Download PNG</button>
-                            <button class="button button-secondary" type="button" onclick="downloadSVG()">Download SVG</button>
+                            <button class="button button-primary" type="button" onclick="downloadPNG()" data-i18n="downloads.png">Download PNG</button>
+                            <button class="button button-secondary" type="button" onclick="downloadSVG()" data-i18n="downloads.svg">Download SVG</button>
                         </div>
-                        <p class="tip">Use SVG when you need vector output for print, packaging, or downstream editing.</p>
+                        <p class="tip" data-i18n="downloads.tip">Use SVG when you need vector output for print, packaging, or downstream editing.</p>
                     </div>
                 </div>
             </section>
 
             <section class="guide" id="guide">
                 <div class="guide-item">
-                    <p class="panel-kicker">Format discipline</p>
-                    <h3>Choose the symbol for the job.</h3>
-                    <p>Stay with Code 128 and EAN for retail-style labels, move to QR or Data Matrix when density matters.</p>
+                    <p class="panel-kicker" data-i18n="guide.items.one.kicker">Format discipline</p>
+                    <h3 data-i18n="guide.items.one.title">Choose the symbol for the job.</h3>
+                    <p data-i18n="guide.items.one.body">Stay with Code 128 and EAN for retail-style labels, move to QR or Data Matrix when density matters.</p>
                 </div>
                 <div class="guide-item">
-                    <p class="panel-kicker">Option syntax</p>
-                    <h3>Keep flags short and explicit.</h3>
-                    <p>Enter options as space-separated flags such as <code>includetext</code> or key-value pairs like <code>height=18</code>.</p>
+                    <p class="panel-kicker" data-i18n="guide.items.two.kicker">Option syntax</p>
+                    <h3 data-i18n="guide.items.two.title">Keep flags short and explicit.</h3>
+                    <p data-i18n-html="guide.items.two.body">Enter options as space-separated flags such as <code>includetext</code> or key-value pairs like <code>height=18</code>.</p>
                 </div>
                 <div class="guide-item">
-                    <p class="panel-kicker">Export path</p>
-                    <h3>Review in raster, deliver in vector.</h3>
-                    <p>PNG is fast for review. SVG is the safer handoff when a printer, designer, or downstream system needs clean geometry.</p>
+                    <p class="panel-kicker" data-i18n="guide.items.three.kicker">Export path</p>
+                    <h3 data-i18n="guide.items.three.title">Review in raster, deliver in vector.</h3>
+                    <p data-i18n="guide.items.three.body">PNG is fast for review. SVG is the safer handoff when a printer, designer, or downstream system needs clean geometry.</p>
                 </div>
             </section>
         </main>
 
         <footer class="site-footer">
-            <p>Pure browser barcode rendering with <a href="https://github.com/metafloor/bwip-js" target="_blank" rel="noreferrer">bwip-js</a>.</p>
+            <p data-i18n-html="footer.body">Pure browser barcode rendering with <a href="https://github.com/metafloor/bwip-js" target="_blank" rel="noreferrer">bwip-js</a>.</p>
         </footer>
     </div>
 
