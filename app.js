@@ -225,7 +225,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function getInitialLanguage() {
-    return navigator.language && navigator.language.toLowerCase().startsWith("ko") ? "ko" : "en";
+    const savedLanguage = window.localStorage.getItem("barcode-generator-language");
+    if (savedLanguage && copy[savedLanguage]) {
+        return savedLanguage;
+    }
+    return "en";
 }
 
 function populateSymbologies() {
@@ -277,6 +281,7 @@ function attachEventHandlers() {
 
 function setLanguage(language) {
     currentLanguage = copy[language] ? language : "en";
+    window.localStorage.setItem("barcode-generator-language", currentLanguage);
     document.documentElement.lang = currentLanguage;
     document.title = getCopy("title");
 
